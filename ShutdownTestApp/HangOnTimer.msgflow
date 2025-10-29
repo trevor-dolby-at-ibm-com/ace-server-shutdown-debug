@@ -19,6 +19,13 @@
       <connections xmi:type="eflow:FCMConnection" xmi:id="FCMConnection_2" targetNode="FCMComposite_1_3" sourceNode="FCMComposite_1_2" sourceTerminalName="OutTerminal.out" targetTerminalName="InTerminal.in"/>
     </composition>
     <propertyOrganizer/>
-    <stickyBoard/>
+    <stickyBoard>
+      <stickyNote location="404,142" association="FCMComposite_1_3">
+        <body xmi:type="utility:ConstantString" string="Sleeps for 1800 seconds"/>
+      </stickyNote>
+      <stickyNote location="194,142" association="FCMComposite_1_2">
+        <body xmi:type="utility:ConstantString" string="Writes to syslog"/>
+      </stickyNote>
+    </stickyBoard>
   </eClassifiers>
 </ecore:EPackage>
