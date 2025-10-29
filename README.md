@@ -9,10 +9,12 @@ One important command is
 mqsireportproperties ACEv12_Broker -e default -o FlowThreadReporter/IgnoreLocks -r
 ```
 as it will bypass the usual REST API locking and cause the server to dump the state of the various
-flows (including the one that is failing to shut down). 
+flows (including the one that is failing to shut down). See [flow-thread-reporter](#flow-thread-reporter)
+for details.
 
 Using `kill -3` on a DataFlowEngine is also helpful if the flow is stuck in a Java call as it causes the 
 DataFlowEngine to produce a javacore, but will not always show which message flow node is calling Java.
+See [javacore-limitations](#javacore-limitations) for details.
 
 ## Problems during shutdown
 
@@ -58,7 +60,7 @@ Avoiding deploy chain locks and writing report to stdout for the integration ser
 
 BIP8071I: Successful command completion.
 ```
-The output is visible in the stdout file name in the response:
+The output is visible in the stdout file named in the response (`/var/mqsi/components/ACEv12_Broker/servers/default/stdout`):
 ```
 FlowThreadReporter command received; dump follows:
 applicationCount: 1
@@ -132,6 +134,7 @@ applicationCount: 1
           Java Compute[ComIbmJavaComputeNode],Trace/out,1,2025-10-29T21:21:00Z,0,(00018842-6902853C-00000001)
 ```
 
+Matching syslog (may need to scroll to the right):
 ```
 2025-10-29T16:20:46.834374-05:00 IBM-7NGKB54 ACE[99941]: IBM App Connect Enterprise v1201217 (ACEv12_Broker) [Thread 99941] (Msg 1/1) BIP2001I: The IBM App Connect Enterprise service has started at version 1201217; process ID 99946.
 2025-10-29T16:20:48.813387-05:00 IBM-7NGKB54 systemd-resolved[169]: Clock change detected. Flushing caches.
