@@ -4,7 +4,7 @@ This repo contains an example flow that will sleep upon startup in order to caus
 to hang. The goal is to allow experiments with various debugging strategies and commands that can
 help show where issues are occurring.
 
-An important command is
+One important command is
 ```
 mqsireportproperties ACEv12_Broker -e default -o FlowThreadReporter/IgnoreLocks -r
 ```
@@ -13,6 +13,20 @@ flows (including the one that is failing to shut down).
 
 Using `kill -3` on a DataFlowEngine is also helpful if the flow is stuck in a Java call, but will
 not always show which message flow node is calling Java.
+
+## Problems during shutdown
+
+ACE message flows will normally try to shut down gracefully, completing in-flight work before exiting.
+This can be a problem if flows get stuck during message flow operation, as it can prevent shutdown and
+in some cases cause issues with other administrative activities: if a flow is in the process of being
+redeployed, the server's administration REST API threads will be busy with the redeploy and will not
+normally process any other work. This can lead to commands timing out and the server generally appearing
+unresponsive.
+
+The application in this repo looks like this:
+
+![flow](/ShutdownTestApp/HangOnTimer.png)
+
 
 
 - ESQL SLEEP() is interrupted by shutdown
